@@ -7,8 +7,9 @@ import { Card } from 'src/cards/entities/card.entity';
 import { UserCard } from 'src/user-cards/entities/user-card.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User, UserCard])],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService]
 })
 export class UsersModule { }

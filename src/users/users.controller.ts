@@ -12,6 +12,11 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Post('tap/:id')
+  tap(@Param('id') id: number) {
+    return this.usersService.tap(id);
+  }
+
   @Post('update/:id')
   updateOnline(@Param('id') id: number) {
     return this.usersService.updateOnline(id);
@@ -32,8 +37,8 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.usersService.remove(+id);
+  // }
 }

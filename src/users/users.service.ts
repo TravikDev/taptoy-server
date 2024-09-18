@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import User from './entities/user.entity';
+import { UserCard } from 'src/user-cards/entities/user-card.entity';
 
 // type IUser = {
 //   idTelegram?: number
@@ -19,7 +20,9 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    @InjectRepository(UserCard)
+    private userCardsRepository: Repository<UserCard>
   ) { }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -31,6 +34,23 @@ export class UsersService {
 
     const user = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
     return this.userRepository.save(user);
+  }
+
+  async tap(_id: number): Promise<User> {
+
+    const currentUser = await this.userRepository.findOneBy({ _id })
+
+    if (currentUser.energy <= 0) {
+      throw new BadRequestException('No energy')
+    }
+
+    const updatedUser = {
+      ...currentUser,
+      coins: currentUser.coins + 1,
+      energy: --currentUser.energy,
+    }
+
+    return this.userRepository.save(updatedUser);
   }
 
   async updateOnline(_id: number): Promise<User> {
@@ -63,6 +83,17 @@ export class UsersService {
 
   //   return await this.userRepository.save(userNew)
   // }
+
+  async recalculateSalary(_id: number) {
+    const user = await this.userRepository.findOneBy({ _id })
+    const userCards = await this.userCardsRepository.findBy({ user })
+
+    console.log(userCards)
+    
+    const salary = userCards.reduce((acc, item) => { console.log(item); return acc + item.salary }, 0)
+
+    return await this.userRepository.save({ ...user, salary })
+  }
 
   async findAll() {
     return await this.userRepository.find();
@@ -109,7 +140,7 @@ export class UsersService {
 
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }

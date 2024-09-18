@@ -8,9 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './database/database.module';
 import { CardsModule } from './cards/cards.module';
 import { QuestsModule } from './quests/quests.module';
-import { TapsModule } from './taps/taps.module';
 import { TeamsModule } from './teams/teams.module';
 import { UserCardsModule } from './user-cards/user-cards.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CronModule } from './cron/cron.module';
+import { TapModule } from './tap/tap.module';
 
 @Module({
   imports: [
@@ -28,9 +30,11 @@ import { UserCardsModule } from './user-cards/user-cards.module';
     DatabaseModule,
     CardsModule,
     QuestsModule,
-    TapsModule,
     TeamsModule,
     UserCardsModule,
+    ScheduleModule.forRoot(),
+    CronModule,
+    TapModule
   ],
   controllers: [AppController],
   providers: [AppService],
