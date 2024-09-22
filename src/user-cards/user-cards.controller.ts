@@ -10,13 +10,13 @@ export class UserCardsController {
 
   @Post('assign')
   assignCardToUser(@Body() assignCardDto: AssignCardDto) {
+    console.log('dto', assignCardDto)
     const { userId, cardId } = assignCardDto;
     return this.userCardsService.assignCardToUser(cardId, userId);
   }
 
   @Post('upgrade/:userId/:userCardId')
   upgradeUserCard(@Param('userId') userId: number, @Param('userCardId') userCardId: number) {
-    // const { experience } = upgradeCardDto;
     return this.userCardsService.upgradeUserCard(userId, userCardId);
   }
 

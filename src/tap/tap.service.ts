@@ -24,7 +24,7 @@ export class TapService {
     const coins = user.coins + 1
     if(user.energy <= 0) {
       throw new BadRequestException('Not enough!')
-    }
+    } 
     const energy = user.energy - 1
     console.log(user.coins)
     return await this.userRepository.save({ ...user, coins, energy });
