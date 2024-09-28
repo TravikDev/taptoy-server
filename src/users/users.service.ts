@@ -25,12 +25,18 @@ export class UsersService {
     private userCardsRepository: Repository<UserCard>
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User | 0> {
 
     const dateRegistartion = new Date().valueOf().toString()
     const dateOnline = dateRegistartion
 
     console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
+
+    const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
+
+    if (userExist) {
+      return 0
+    }
 
     const user = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
     return this.userRepository.save(user);
@@ -89,7 +95,7 @@ export class UsersService {
     const userCards = await this.userCardsRepository.findBy({ user })
 
     console.log(userCards)
-    
+
     const salary = userCards.reduce((acc, item) => { console.log(item); return acc + item.salary }, 0)
 
     return await this.userRepository.save({ ...user, salary })
