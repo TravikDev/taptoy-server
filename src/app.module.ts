@@ -13,6 +13,9 @@ import { UserCardsModule } from './user-cards/user-cards.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CronModule } from './cron/cron.module';
 import { TapModule } from './tap/tap.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
   imports: [
@@ -25,7 +28,8 @@ import { TapModule } from './tap/tap.module';
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),
         PORT: Joi.number(),
-      })
+      }),
+      envFilePath: '.env',
     }),
     DatabaseModule,
     CardsModule,
@@ -34,7 +38,11 @@ import { TapModule } from './tap/tap.module';
     UserCardsModule,
     ScheduleModule.forRoot(),
     CronModule,
-    TapModule
+    TapModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+    }),
+    TelegramModule,
   ],
   controllers: [AppController],
   providers: [AppService],
