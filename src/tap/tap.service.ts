@@ -17,14 +17,14 @@ export class TapService {
     return 'This action adds a new tap';
   }
 
-  async clickTap(_id: number) {
+  async clickTap(_id: string) {
     console.log(_id)
-    const user = await this.userRepository.findOneBy({ _id })
+    const user = await this.userRepository.findOneBy({ idTelegram: _id })
     console.log(user.coins)
     const coins = user.coins + 1
-    if(user.energy <= 0) {
+    if (user.energy <= 0) {
       throw new BadRequestException('Not enough!')
-    } 
+    }
     const energy = user.energy - 1
     console.log(user.coins)
     return await this.userRepository.save({ ...user, coins, energy });

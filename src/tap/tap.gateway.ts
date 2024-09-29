@@ -73,7 +73,7 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   }
 
   @SubscribeMessage('clickTap')
-  clickTap(@MessageBody() id: number) {
+  clickTap(@MessageBody() id: string) {
     console.log(id);
     return this.tapService.clickTap(id);
   }
