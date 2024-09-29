@@ -25,6 +25,8 @@ export class TelegramService {
 
       const userExist = userService.findOneByTelegramId(chatId)
 
+      console.log(userExist)
+
       if (userExist) {
         this.sendStartMessage(chatId, 'Вы вернулись!');
       } else {
