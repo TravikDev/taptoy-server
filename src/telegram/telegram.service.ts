@@ -23,12 +23,13 @@ export class TelegramService {
 
       console.log(chatId)
 
-      const result = userService.create({ idTelegram: chatId, username: 'Guest', avatar: 'google.com' })
+      const userExist = userService.findOneByTelegramId(chatId)
 
-      if (result) {
-        this.sendStartMessage(chatId, 'Привет!');
+      if (userExist) {
+        this.sendStartMessage(chatId, 'Вы вернулись!');
       } else {
-        this.sendStartMessage(chatId, 'Пользователь уже зарегестрирован!');
+        const result = userService.create({ idTelegram: chatId, username: 'Guest', avatar: 'google.com' })
+        this.sendStartMessage(chatId, 'Добро пожаловать!');
       }
 
     });

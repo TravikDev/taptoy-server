@@ -25,7 +25,7 @@ export class UsersService {
     private userCardsRepository: Repository<UserCard>
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<User | 0> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
 
     const dateRegistartion = new Date().valueOf().toString()
     const dateOnline = dateRegistartion
@@ -34,12 +34,11 @@ export class UsersService {
 
     const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
 
-    if (userExist) {
-      return 0
+    if (!userExist) {
+      const user = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
+      return this.userRepository.save(user);
     }
 
-    const user = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
-    return this.userRepository.save(user);
   }
 
   async tap(_id: number): Promise<User> {
