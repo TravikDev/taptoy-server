@@ -109,6 +109,10 @@ export class UsersService {
     return await this.userRepository.findOneBy({ _id });
   }
 
+  async findOneByTelegramId(idTelegram: string) {
+    return await this.userRepository.findOneBy({ idTelegram });
+  }
+
   async update(_id: number, updateUserDto: UpdateUserDto): Promise<User> {
 
     // _ Initialization
