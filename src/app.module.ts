@@ -16,6 +16,7 @@ import { TapModule } from './tap/tap.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
+import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from './auth/auth.module';
       rootPath: join(__dirname, '..', 'client'),
     }),
     AuthModule,
+    TelegramModule,
   ],
   controllers: [AppController],
   providers: [AppService],
