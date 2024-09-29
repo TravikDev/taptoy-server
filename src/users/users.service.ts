@@ -58,7 +58,7 @@ export class UsersService {
     return this.userRepository.save(updatedUser);
   }
 
-  async updateOnline(_id: number): Promise<User> {
+  async updateOnline(_id: number): Promise<number> {
 
     const dateOnline = new Date().valueOf().toString()
 
@@ -74,7 +74,9 @@ export class UsersService {
 
     // console.log('SALARY: ', salary)
 
-    return this.userRepository.save({ ...user, dateOnline });
+    await this.userRepository.save({ ...user, dateOnline });
+
+    return salary
   }
 
   // async create(createUserDto: CreateUserDto) {
