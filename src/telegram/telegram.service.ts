@@ -17,13 +17,13 @@ export class TelegramService {
     this.bot = new TelegramBot('7419941967:AAGWQH1vtImV_1Sl1ritgGVXX0cbUwjUxVI', { polling: true });
 
     // Ожидание команды /start
-    this.bot.onText(/\/start/, (msg) => {
+    this.bot.onText(/\/start/, async (msg) => {
 
       const chatId = (msg.chat.id).toString();
 
       console.log(chatId)
 
-      const userExist = userService.findOneByTelegramId(chatId)
+      const userExist = await userService.findOneByTelegramId(chatId)
 
       console.log(userExist)
 
