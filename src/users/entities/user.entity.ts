@@ -21,7 +21,7 @@ class User {
     @Column({ default: 1 })
     level: number
 
-    @Column({ default: 1 })
+    @Column({ default: 0 })
     salary: number
 
     @Column({ default: 0 })
