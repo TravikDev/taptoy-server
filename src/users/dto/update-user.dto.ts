@@ -7,7 +7,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsOptional()
     @IsNumber()
-    idTelegram?: number
+    idTelegram?: string
 
     @IsOptional()
     @IsString()

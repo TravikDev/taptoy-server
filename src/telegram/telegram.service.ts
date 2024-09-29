@@ -19,7 +19,9 @@ export class TelegramService {
     // Ожидание команды /start
     this.bot.onText(/\/start/, (msg) => {
 
-      const chatId = msg.chat.id;
+      const chatId = (msg.chat.id).toString();
+
+      console.log(chatId)
 
       const result = userService.create({ idTelegram: chatId, username: 'Guest', avatar: 'google.com' })
 
@@ -33,7 +35,7 @@ export class TelegramService {
   }
 
   // Функция отправки сообщения с Web App кнопкой (синяя кнопка)
-  sendStartMessage(chatId: number, msg = '') {
+  sendStartMessage(chatId: string, msg = '') {
     const webAppUrl = `https://paradoxlive.pro?userId=${chatId}`; // URL вашего Web App
 
     const options = {

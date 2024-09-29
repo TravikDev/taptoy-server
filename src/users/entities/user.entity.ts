@@ -13,7 +13,7 @@ class User {
     // Basic
 
     @Column({ nullable: false, default: 0 })
-    idTelegram: number
+    idTelegram: string
 
     @Column({ default: 'Guest' })
     username: string

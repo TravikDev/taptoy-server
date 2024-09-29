@@ -4,7 +4,7 @@ export class CreateUserDto {
 
     @IsNumber()
     @IsNotEmpty()
-    idTelegram: number
+    idTelegram: string
 
     @IsString()
     username: string
