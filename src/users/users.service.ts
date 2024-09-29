@@ -111,7 +111,12 @@ export class UsersService {
   }
 
   async findOneByTelegramId(idTelegram: string) {
-    return await this.userRepository.findOneBy({ idTelegram });
+
+    console.log('CURRENT TG ID: ', idTelegram)
+    const currentUser = await this.userRepository.findOneBy({ idTelegram });
+    console.log('CURRENT USER: ', currentUser)
+
+    return currentUser
   }
 
   async update(_id: number, updateUserDto: UpdateUserDto): Promise<User> {
