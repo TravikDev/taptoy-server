@@ -34,7 +34,7 @@ export class UsersController {
 
 
   @Get('telegram/:id')
-  findOneByTelegramId(@Param('idTelegram') idTelegram: string) {
+  findOneByTelegramId(@Param('id') idTelegram: string) {
     return this.usersService.findOneByTelegramId(idTelegram);
   }
 
