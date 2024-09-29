@@ -13,7 +13,7 @@ import { TapService } from './tap.service';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:5173', // Разрешаем доступ с вашего клиента
+    origin: 'http://paradoxlive.pro', // Разрешаем доступ с вашего клиента
     methods: ['GET', 'POST'],
     credentials: true, // Если требуется авторизация
   },
