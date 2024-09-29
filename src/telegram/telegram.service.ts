@@ -39,6 +39,9 @@ export class TelegramService {
 
   // Функция отправки сообщения с Web App кнопкой (синяя кнопка)
   sendStartMessage(chatId: string, msg = '') {
+
+    console.log('ID!: ', chatId)
+
     const webAppUrl = `https://paradoxlive.pro?userId=${chatId}`; // URL вашего Web App
 
     const options = {
