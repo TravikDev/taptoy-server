@@ -15,7 +15,7 @@ import { CronModule } from './cron/cron.module';
 import { TapModule } from './tap/tap.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { TelegramModule } from './telegram/telegram.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { TelegramModule } from './telegram/telegram.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
     }),
-    TelegramModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
