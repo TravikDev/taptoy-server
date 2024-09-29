@@ -49,6 +49,8 @@ export class TelegramService {
       },
     };
 
+    console.log('id: ', chatId)
+
     !msg
       ? this.bot.sendMessage(chatId, msg, options)
       : this.bot.sendMessage(chatId, msg, options)
