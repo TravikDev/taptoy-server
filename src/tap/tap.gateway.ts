@@ -31,8 +31,10 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     console.log('WebSocket Server Initialized');
   }
 
-  handleConnection(client: Socket) {
+  async handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id} ${client.handshake.query?.userId}`);
+    /* @ts-ignore */
+    await this.tapService.updateUserSocketId(client.id, client.handshake.query?.userId)
     this.pressCounts[client.id] = 0;
   }
 
