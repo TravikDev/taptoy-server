@@ -32,7 +32,7 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   }
 
   handleConnection(client: Socket) {
-    console.log(`Client connected: ${client.id}`);
+    console.log(`Client connected: ${client.id} ${client.handshake.query?.userId}`);
     this.pressCounts[client.id] = 0;
   }
 
@@ -52,7 +52,7 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     }
 
     console.log(data);
-    const result = await this.tapService.clickTap(data.id);
+    const result = await this.tapService.clickTap(data.id, client.id);
     console.log('RESP: ', result)
 
     // this.pressCounts[client.id] = (this.pressCounts[client.id] || 0) + 1;
@@ -73,9 +73,9 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   }
 
   @SubscribeMessage('clickTap')
-  clickTap(@MessageBody() id: string) {
+  clickTap(@MessageBody() id: string, @ConnectedSocket() client: Socket) {
     console.log(id);
-    return this.tapService.clickTap(id);
+    return this.tapService.clickTap(id, client.id);
   }
 }
 

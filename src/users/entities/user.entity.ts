@@ -35,17 +35,20 @@ class User {
 
     // Dates
 
-    @Column({ default: 0 })
+    @Column({ default: "0" })
     dateRegistartion: string
 
-    @Column({ default: 0 })
+    @Column({ default: "0" })
     dateSalary: string
 
-    @Column({ default: 0 })
+    @Column({ default: "0" })
     dateUpdated: string
 
-    @Column({ default: 0 })
+    @Column({ default: "0" })
     dateOnline: string
+
+    @Column({ default: "0" })
+    socketId: string
 
     // Relations
 

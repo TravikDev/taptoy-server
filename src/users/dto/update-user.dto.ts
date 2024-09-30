@@ -45,6 +45,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsNumber()
     rating?: number
 
+    @IsOptional()
+    @IsString()
+    socketId?: string
+
     // @IsOptional()
     // @IsNumber()
 

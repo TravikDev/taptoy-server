@@ -17,9 +17,9 @@ export class TapService {
     return 'This action adds a new tap';
   }
 
-  async clickTap(_id: string) {
-    console.log(_id)
-    const user = await this.userRepository.findOneBy({ idTelegram: _id })
+  async clickTap(idTelegram: string, socketId: string) {
+    console.log(idTelegram)
+    const user = await this.userRepository.findOneBy({ idTelegram, socketId })
     console.log(user.coins)
     const coins = user.coins + 1
     if (user.energy <= 0) {
