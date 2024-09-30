@@ -34,7 +34,7 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   async handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id} ${client.handshake.query?.userId}`);
     /* @ts-ignore */
-    await this.tapService.updateUserSocketId(client.id, client.handshake.query?.userId)
+    await this.tapService.updateUserSocketId(client.handshake.query?.userId, client.id)
     this.pressCounts[client.id] = 0;
   }
 
