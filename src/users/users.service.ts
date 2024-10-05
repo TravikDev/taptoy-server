@@ -76,6 +76,7 @@ export class UsersService {
       }
 
     } else {
+      console.log(`Update User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram})`)
       return await this.updateOnline(userExist._id)
     }
 
