@@ -10,6 +10,8 @@ export class UsersController {
   @Post('update/:idRefTelegram?')
   create(@Body() createUserDto: CreateUserDto, @Param('idRefTelegram') idRefTelegram: string,) {
 
+    console.log('BODY + PARAM: ', createUserDto, idRefTelegram)
+
     if (idRefTelegram) {
       return this.usersService.createOrUpdate(createUserDto, idRefTelegram);
     }

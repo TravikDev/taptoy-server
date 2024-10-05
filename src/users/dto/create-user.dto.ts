@@ -9,8 +9,9 @@ export class CreateUserDto {
     @IsString()
     username: string
 
+    @IsOptional()
     @IsString()
-    avatar: string
+    avatar?: string
 
     @IsOptional()
     @IsString()
