@@ -14,8 +14,9 @@ export class CronService {
 
   private readonly logger = new Logger(CronService.name);
 
-  @Cron('0 0 12,0 * * *')
+  // @Cron('0 0 12,0 * * *')
   // @Cron('0 23,0 * * * *')
+  @Cron(CronExpression.EVERY_3_HOURS)
   async handleCron() {
 
     const users = await this.userRepository.find()
@@ -23,25 +24,23 @@ export class CronService {
 
     await this.userRepository.save(updatedUsers)
 
-    console.log('Called')
-    this.logger.debug('Called');
+    this.logger.debug('UPDATED ENERGY!');
   }
 
 
-  @Cron('0 0 12,0 * * *')
+  @Cron(CronExpression.EVERY_3_HOURS)
   // @Cron(CronExpression.EVERY_MINUTE)
   async handleCronCalculateUsersRating() {
 
-    console.log('update users!')
     let users = await this.userRepository.find()
     // console.log('allUsers', users)
     users.sort((userPrevious, userNext) => userPrevious.salary - userNext.salary)
-    const usersRating = users.map((user, idx) => ({ ...user, rating: idx+1 }))
+    const usersRating = users.map((user, idx) => ({ ...user, rating: idx + 1 }))
     const updatedUsers = usersRating.map(user => ({ ...user, energy: 100 }))
 
     await this.userRepository.save(updatedUsers)
 
     // console.log('Called')
-    this.logger.debug('Called');
+    this.logger.debug('UPDATED RATING!');
   }
 }

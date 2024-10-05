@@ -88,7 +88,7 @@ export class UserCardsService {
     userCard.salary = userCard.level * userCard.salary
     userCard.upgradeCost = upgradeCost;
 
-    return this.userCardRepository.save(userCard);
+    return await this.userCardRepository.save(userCard);
   }
 
 

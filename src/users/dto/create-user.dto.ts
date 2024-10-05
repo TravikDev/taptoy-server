@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, isNumber, IsNumber, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, isNumber, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateUserDto {
 
@@ -12,6 +12,9 @@ export class CreateUserDto {
     @IsString()
     avatar: string
 
+    @IsOptional()
+    @IsString()
+    idRefTelegram?: string;
     // @IsNumber()
     // level: number
 

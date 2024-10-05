@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,9 +7,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  @Post('update/:idRefTelegram?')
+  create(@Body() createUserDto: CreateUserDto, @Param('idRefTelegram') idRefTelegram: string,) {
+
+    if (idRefTelegram) {
+      return this.usersService.createOrUpdate(createUserDto, idRefTelegram);
+    }
     return this.usersService.createOrUpdate(createUserDto);
+
   }
 
   @Post('tap/:id')
@@ -22,10 +27,10 @@ export class UsersController {
     return this.usersService.getMyRefUsers(idTelegram);
   }
 
-  @Post('update/:id')
-  updateOnline(@Param('id') id: number) {
-    return this.usersService.updateOnline(id);
-  }
+  // @Post('update/:idTelegram')
+  // updateOnline(@Param('idTelegram') idTelegram: string) {
+  //   return this.usersService.createOrUpdate(idTelegram);
+  // }
 
   @Get()
   findAll() {
