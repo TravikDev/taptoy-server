@@ -13,8 +13,10 @@ export class UsersController {
     console.log('BODY + PARAM: ', createUserDto, idRefTelegram)
 
     if (idRefTelegram) {
+      console.log('with ref')
       return this.usersService.createOrUpdate(createUserDto, idRefTelegram);
     }
+    console.log('no ref')
     return this.usersService.createOrUpdate(createUserDto);
 
   }

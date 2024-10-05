@@ -19,7 +19,9 @@ export class TapService {
 
   async updateUserSocketId(idTelegram: string, socketId: string) {
     const user = await this.userRepository.findOneBy({ idTelegram })
-    return await this.userRepository.save({ ...user, socketId });
+    if (user) {
+      return await this.userRepository.save({ ...user, socketId });
+    }
   }
 
   async clickTap(idTelegram: string, socketId: string) {
