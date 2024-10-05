@@ -1,10 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+// import { CreateUserDto } from './dto/create-userNew.dto';
+// import { UpdateUserDto } from './dto/update-userNew.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import User from './entities/user.entity';
 import { UserCard } from 'src/user-cards/entities/user-card.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+// import User, { IRefUser } from './entities/userNew.entity';
+// import { UserCard } from 'src/userNew-cards/entities/userNew-card.entity';
 
 // type IUser = {
 //   idTelegram?: number
@@ -25,7 +29,7 @@ export class UsersService {
     private userCardsRepository: Repository<UserCard>
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async createOrUpdate(createUserDto: CreateUserDto, idTelegramRef = ""): Promise<User> {
 
     const dateRegistartion = new Date().valueOf().toString()
     const dateOnline = dateRegistartion
@@ -33,13 +37,92 @@ export class UsersService {
     console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
 
     const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
+    const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
+
+    // ------------------------- IF USER DOESN'T EXIST
 
     if (!userExist) {
-      const user = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
-      return this.userRepository.save(user);
+
+      // ---------------------- REF SIDE
+
+      if (idTelegramRef && idTelegramRef !== "") {
+
+        const userRefExist = await this.userRepository.findOneBy({ idTelegram: idTelegramRef })
+
+        // -------------------- IF REF IS GOOD
+        if (userRefExist) {
+
+          userNew.referralUser = userRefExist
+          userRefExist.referralUsers.push(userNew)
+          await this.userRepository.save(userRefExist);
+
+          console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram}) with Ref idTelegram: ${userRefExist.idTelegram}`)
+          return await this.userRepository.save(userNew);
+
+          // -------------------- IF REF IS BAD
+        } else {
+
+          console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram})`)
+          return await this.userRepository.save(userNew);
+        }
+
+        // -------------------- NO REF
+      } else {
+
+        // const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
+        console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram})`)
+        return await this.userRepository.save(userNew);
+
+      }
+
+    } else {
+      return await this.updateOnline(userExist._id)
     }
 
   }
+
+
+  async updateOnline(_id: number): Promise<User> {
+
+    // Update Online
+
+    const dateOnline = new Date().valueOf().toString()
+
+    const userNew = await this.userRepository.findOneBy({ _id })
+
+    const diff = +dateOnline - +userNew.dateOnline
+    const diffHour = diff / 1000 / 60 / 60
+    console.log('DIFF - 1 HOUR: ', diffHour)
+
+    const salary = +(diffHour * userNew.salary).toFixed(0)
+    userNew.coins += salary
+    console.log('SALARY - 1 HOUR: ', salary)
+
+    // console.log('SALARY: ', salary)
+
+    // frontSide!
+    return await this.userRepository.save({ ...userNew, dateOnline });
+
+  }
+
+  // async createRef(idTelegram: string, refId: string): Promise<User> {
+
+  //   // const dateRegistartion = new Date().valueOf().toString()
+  //   // const dateOnline = dateRegistartion
+
+  //   const userNew = await this.userRepository.findOneBy({ idTelegram });
+  //   const refUser = await this.userRepository.findOneBy({ idTelegram: refId });
+
+  //   if (userNew && refUser) {
+
+  //   } else {
+  //     throw new BadRequestException('User doesn\'t exist');
+  //   }
+  //   // if (!userExist) {
+  //   return await this.userRepository.save({ ...userNew, });
+  //   // }
+
+  // }
 
   async tap(_id: number): Promise<User> {
 
@@ -58,26 +141,9 @@ export class UsersService {
     return this.userRepository.save(updatedUser);
   }
 
-  async updateOnline(_id: number): Promise<number> {
 
-    const dateOnline = new Date().valueOf().toString()
 
-    const user = await this.userRepository.findOneBy({ _id })
 
-    const diff = +dateOnline - +user.dateOnline
-    const diffHour = diff / 1000 / 60 / 60
-    console.log('DIFF - 1 HOUR: ', diffHour)
-
-    const salary = +(diffHour * user.salary).toFixed(0)
-    user.coins += salary
-    console.log('SALARY - 1 HOUR: ', salary)
-
-    // console.log('SALARY: ', salary)
-
-    await this.userRepository.save({ ...user, dateOnline });
-
-    return salary
-  }
 
   // async create(createUserDto: CreateUserDto) {
 
@@ -92,14 +158,14 @@ export class UsersService {
   // }
 
   async recalculateSalary(_id: number) {
-    const user = await this.userRepository.findOneBy({ _id })
-    const userCards = await this.userCardsRepository.findBy({ user })
+    const userNew = await this.userRepository.findOneBy({ _id })
+    const userCards = await this.userCardsRepository.findBy({ user: userNew })
 
     console.log(userCards)
 
     const salary = userCards.reduce((acc, item) => { console.log(item); return acc + item.salary }, 0)
 
-    return await this.userRepository.save({ ...user, salary })
+    return await this.userRepository.save({ ...userNew, salary })
   }
 
   async findAll() {
@@ -157,6 +223,22 @@ export class UsersService {
   }
 
   // remove(id: number) {
-  //   return `This action removes a #${id} user`;
+  //   return `This action removes a #${id} userNew`;
   // }
+
+
+
+
+
+  // ----------------------- OTHERS
+
+
+
+  async getMyRefUsers(idTelegram: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { idTelegram }, relations: ['referralUsers'] })
+  }
+
+
+
+
 }

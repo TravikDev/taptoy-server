@@ -7,4 +7,6 @@ import { UpdateTelegramDto } from './dto/update-telegram.dto';
 export class TelegramController {
   constructor(private readonly telegramService: TelegramService) {}
 
+  
+
 }

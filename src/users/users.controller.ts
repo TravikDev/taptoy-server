@@ -9,12 +9,17 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    return this.usersService.createOrUpdate(createUserDto);
   }
 
   @Post('tap/:id')
   tap(@Param('id') id: number) {
     return this.usersService.tap(id);
+  }
+
+  @Get('getMyRefUsers/:id')
+  updateUsers(@Param('idTelegram') idTelegram: string) {
+    return this.usersService.getMyRefUsers(idTelegram);
   }
 
   @Post('update/:id')

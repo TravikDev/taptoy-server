@@ -38,6 +38,9 @@ export class Card {
     @Column({ default: 0 })
     upgradeCost: number
 
+    @Column({ default: 'bloggers' })
+    category: string
+
     // Relations
 
     // @ManyToMany(type => User, user => user._id)

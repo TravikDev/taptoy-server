@@ -30,12 +30,49 @@ export class TelegramService {
       if (userExist) {
         this.sendStartMessage(chatId, 'Вы вернулись!');
       } else {
-        const result = userService.create({ idTelegram: chatId, username: 'Guest', avatar: 'google.com' })
+        // const result = userService.create({ idTelegram: chatId, username: 'Guest', avatar: 'google.com' })
         this.sendStartMessage(chatId, 'Добро пожаловать!');
       }
 
     });
+
+    // // Ожидание команды /start
+    // this.bot.onText(/\/start/, async (msg) => {
+
+    //   const chatId = (msg.chat.id).toString();
+
+    //   console.log(chatId)
+
+    //   const userExist = await userService.findOneByTelegramId(chatId)
+
+    //   console.log(userExist)
+
+    //   if (userExist) {
+    //     this.sendStartMessage(chatId, 'Вы вернулись!');
+    //   } else {
+    //     // const result = userService.updateOrCreate({ idTelegram: chatId, username: 'Guest', avatar: 'google.com' })
+    //     this.sendStartMessage(chatId, 'Добро пожаловать!');
+    //   }
+
+    // });
+
+    this.bot.on('message', async (msg: any) => {
+      if (msg.web_app_data) {
+        const webAppData = msg.web_app_data.data; // Получаем данные от Web App
+        const referralId = webAppData.referral_id;
+
+        if (referralId) {
+          this.bot.sendMessage(msg.chat.id, `Вы пришли по реферальной ссылке с ID ${referralId}`);
+        } else {
+          this.bot.sendMessage(msg.chat.id, 'Запуск Web App без реферальной ссылки');
+        }
+      }
+    });
+
   }
+
+
+  // \n Если вас кто-то пригласил, пожалуйста, введите его telegram ID
 
   // Функция отправки сообщения с Web App кнопкой (синяя кнопка)
   sendStartMessage(chatId: string, msg = '') {
@@ -54,6 +91,11 @@ export class TelegramService {
             },
           ],
         ],
+        keyboard: [
+          [{ text: 'Меня пригласили' }], // Two buttons side by side
+        ],
+        resize_keyboard: true, // Automatically resize the keyboard
+        one_time_keyboard: true, // Keyboard disappears after one use
       },
     };
 

@@ -2,7 +2,10 @@
 import { Card } from 'src/cards/entities/card.entity';
 import { Team } from 'src/teams/entities/team.entity';
 import { UserCard } from 'src/user-cards/entities/user-card.entity';
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+
+export type IRefUser = { userId: number }
 
 @Entity()
 class User {
@@ -50,6 +53,16 @@ class User {
     @Column({ default: "0" })
     socketId: string
 
+
+    @OneToMany(() => User, user => user.referralUsers)
+    referralUser: User
+
+    @ManyToOne(() => User, user => user.referralUser)
+    referralUsers: User[]
+
+    // @Column({ type: 'jsonb', nullable: true, default: null })
+    // refUsers: IRefUser[]
+
     // Relations
 
     // @ManyToMany(type => Card, card => card.id)
@@ -60,6 +73,8 @@ class User {
 
     @ManyToMany(type => Team, team => team.id)
     teams: Team[]
+
+
 
     // @ManyToMany(type => User, user => user.id)
     // user: User[]

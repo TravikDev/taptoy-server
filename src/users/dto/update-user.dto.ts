@@ -1,7 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsJSON, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column } from 'typeorm';
+import { IRefUser } from '../entities/user.entity';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
 
@@ -48,6 +49,11 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsOptional()
     @IsString()
     socketId?: string
+
+    @IsOptional()
+    @IsJSON()
+    refUsers?: IRefUser[]
+
 
     // @IsOptional()
     // @IsNumber()
