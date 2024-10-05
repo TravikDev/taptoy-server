@@ -8,7 +8,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post('update/:idRefTelegram?')
-  create(@Body() createUserDto: CreateUserDto, @Param('idRefTelegram') idRefTelegram: string,) {
+  create(@Param('idRefTelegram') idRefTelegram: string, @Body() createUserDto: CreateUserDto) {
 
     console.log('BODY + PARAM: ', createUserDto, idRefTelegram)
 
