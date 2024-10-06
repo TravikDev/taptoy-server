@@ -118,7 +118,7 @@ export class UsersService {
 
     const salary = +(diffHour * userNew.salary).toFixed(0)
     if (salary < 1) {
-      return
+      return { user: userNew, salary: 0 }
     }
     userNew.coins += salary
     console.log('SALARY - 1 HOUR: ', salary)
