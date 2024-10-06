@@ -56,11 +56,12 @@ export class UsersService {
         const userRefExist = await this.userRepository.findOne({ where: { idTelegram: idTelegramRef } })
         console.log('userRefExist', userRefExist)
 
-        if (!userRefExist.referralUsersJSON) {
-          userRefExist.referralUsersJSON = []
-        }
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
+
+          if (!userRefExist.referralUsersJSON) {
+            userRefExist.referralUsersJSON = []
+          }
 
           console.log('userRefExist', userRefExist, userNew)
           userRefExist.referralUsersJSON.push(userNew.idTelegram)
