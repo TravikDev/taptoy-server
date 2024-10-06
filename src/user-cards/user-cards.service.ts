@@ -77,7 +77,7 @@ export class UserCardsService {
     }
   }
 
-  async upgradeUserCard(userId: number, userCardId: number): Promise<UserCard> {
+  async upgradeUserCard(userId: number, userCardId: number): Promise<User> {
 
     console.log('USERID', userId, userCardId)
 
@@ -115,7 +115,8 @@ export class UserCardsService {
 
     console.log('USERCARD5', userCard)
 
-    return await this.userCardRepository.save(userCard);
+    await this.userCardRepository.save(userCard);
+    return user
   }
 
 
