@@ -26,7 +26,7 @@ export class UsersController {
     return this.usersService.tap(id);
   }
 
-  @Get('getMyRefUsers/:id')
+  @Get('getMyRefUsers/:idTelegram')
   updateUsers(@Param('idTelegram') idTelegram: string) {
     return this.usersService.getMyRefUsers(idTelegram);
   }

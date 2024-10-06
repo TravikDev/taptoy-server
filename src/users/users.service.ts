@@ -64,7 +64,7 @@ export class UsersService {
           }
 
           console.log('userRefExist', userRefExist, userNew)
-          userRefExist.referralUsers.push(userNew.idTelegram)
+          userRefExist.referralUsersJSON.push(userNew.idTelegram)
           console.log('userRefExist PUSH')
           // userNew.referralUser = userRefExist
           console.log('userRefExist SETUP')
@@ -252,7 +252,10 @@ export class UsersService {
 
 
   async getMyRefUsers(idTelegram: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { idTelegram }, relations: ['referralUsers'] })
+    console.log('get Friends', idTelegram)
+    const user = await this.userRepository.findOne({ where: { idTelegram } })
+    console.log('user: ', user)
+    return user
   }
 
 

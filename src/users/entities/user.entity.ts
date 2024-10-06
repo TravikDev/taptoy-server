@@ -57,8 +57,14 @@ class User {
     // @ManyToOne(() => User, user => user.referralUsers)
     // referralUser: User
 
+    @ManyToOne(() => User, user => user.referralUsers, { nullable: true })
+    referralUser: User; // Ссылка на реферера
+    
+    @OneToMany(() => User, user => user.referralUser)
+    referralUsers: User[]; // Массив рефералов
+
     @Column({ type: 'jsonb', nullable: true })  // Тип поля json, допускается null
-    referralUsers: any;  // Вы можете указать `any` для хранения любых данных
+    referralUsersJSON: any;  // Вы можете указать `any` для хранения любых данных
 
     // @Column({ type: 'jsonb', nullable: true, default: null })
     // refUsers: IRefUser[]
