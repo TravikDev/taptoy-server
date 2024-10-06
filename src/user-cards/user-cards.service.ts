@@ -27,7 +27,7 @@ export class UserCardsService {
 
   async getUserCardsByCategory(_id: number, category: string) {
 
-    console.log('by category')
+    console.log('by category', category, _id)
 
     const user = await this.userRepository.findOneBy({ _id })
     const userCards = await this.userCardRepository.find({ where: { user }, relations: ['card'] });
