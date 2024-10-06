@@ -56,6 +56,9 @@ export class UsersService {
         const userRefExist = await this.userRepository.findOne({ where: { idTelegram: idTelegramRef } })
         console.log('userRefExist', userRefExist)
 
+        if (!userRefExist.referralUsersJSON) {
+          userRefExist.referralUsersJSON = []
+        }
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
 
@@ -123,8 +126,8 @@ export class UsersService {
 
     // frontSide!
     //return 
-    const currentUser = await this.userRepository.save({ ...userNew, dateOnline });
-    return { user: currentUser, salary }
+    const user = await this.userRepository.save({ ...userNew, dateOnline });
+    return { user, salary }
   }
 
   // async createRef(idTelegram: string, refId: string): Promise<User> {
