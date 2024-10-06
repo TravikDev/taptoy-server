@@ -19,13 +19,14 @@ export class CardsController {
 
   @Get('category/:category')
   findAllByCategory(@Param('category') category: string) {
+    console.log('category cards: ', category)
     return this.cardsService.findAllByCategory(category);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cardsService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.cardsService.findOne(+id);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto) {

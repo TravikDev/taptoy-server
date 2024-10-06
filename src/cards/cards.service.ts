@@ -43,9 +43,9 @@ export class CardsService {
     return await this.cardRepository.findBy({ category });
   }
 
-  async findOne(_id: number) {
-    return await this.cardRepository.findOneBy({ _id });
-  }
+  // async findOne(_id: number) {
+  //   return await this.cardRepository.findOneBy({ _id });
+  // }
 
   async update(_id: number, updateUserDto: UpdateCardDto): Promise<Card> {
 
