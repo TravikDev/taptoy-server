@@ -60,7 +60,7 @@ export class UsersService {
         if (userRefExist) {
 
           if (!userRefExist.referralUsers) {
-            userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
+            userRefExist.referralUsersJSON = []; // Инициализируем как пустой массив, если он undefined
           }
 
           console.log('userRefExist', userRefExist, userNew)
