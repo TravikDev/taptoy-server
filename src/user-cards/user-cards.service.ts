@@ -64,8 +64,12 @@ export class UserCardsService {
       userCard.card = card;
       userCard.salary = card.salary
 
+      console.log('updatedUser: ', user)
+
       // user.userCards = [...user.userCards, userCard]
       await this.userRepository.save(user)
+
+      console.log('updatedUserCard: ', userCard)
 
       await this.userCardRepository.save(userCard);
 

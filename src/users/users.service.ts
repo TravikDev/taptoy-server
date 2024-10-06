@@ -119,7 +119,8 @@ export class UsersService {
     const salary = +((diffHour * userNew.salary).toFixed(0))
     if (salary < 1) {
       console.log('no salary today!')
-      return { user: userNew, salary: 0 }
+      const user = await this.userRepository.save({ ...userNew });
+      return { user, salary: 0 }
     }
     console.log('some salary!', salary)
     userNew.coins += salary
@@ -193,6 +194,7 @@ export class UsersService {
 
     const salary = userCards.reduce((acc, item) => { console.log(item); return acc + item.salary }, 0)
 
+    console.log('userCurrentSalary!: ', salary)
     return await this.userRepository.save({ ...userNew, salary })
   }
 
