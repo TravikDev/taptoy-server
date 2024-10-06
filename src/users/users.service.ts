@@ -52,9 +52,9 @@ export class UsersService {
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
 
-          // if (!userRefExist.referralUsers) {
-          //   userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
-          // }
+          if (!userRefExist.referralUsers) {
+            userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
+          }
 
           console.log('userRefExist', userRefExist, userNew)
           userRefExist.referralUsers.push(userNew)
