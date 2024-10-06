@@ -116,10 +116,12 @@ export class UsersService {
     const diffHour = diff / 1000 / 60 / 60
     console.log('DIFF - 1 HOUR: ', diffHour)
 
-    const salary = +(diffHour * userNew.salary).toFixed(0)
-    if (+salary < 1) {
+    const salary = +((diffHour * userNew.salary).toFixed(0))
+    if (salary < 1) {
+      console.log('no salary today!')
       return { user: userNew, salary: 0 }
     }
+    console.log('some salary!', salary)
     userNew.coins += salary
     console.log('SALARY - 1 HOUR: ', salary)
 
