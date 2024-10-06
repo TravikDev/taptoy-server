@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, IsString } from "class-validator"
+import { IsInt, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class CreateCardDto {
 
@@ -20,6 +20,9 @@ export class CreateCardDto {
     @IsInt()
     price: number
 
+    @IsOptional()
+    @IsString()
+    category?: string
     // @IsNumber()
     // progress: number
 

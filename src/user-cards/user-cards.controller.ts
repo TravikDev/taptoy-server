@@ -24,4 +24,10 @@ export class UserCardsController {
   getUserCards(@Param('id') id: number) {
     return this.userCardsService.getUserCards(id)
   }
+
+  
+  @Get('category/:id/:category')
+  getUserCardsByCategory(@Param('id') id: number, @Param('category') category: string) {
+    return this.userCardsService.getUserCardsByCategory(id, category)
+  }
 }

@@ -25,6 +25,13 @@ export class UserCardsService {
     return userCards
   }
 
+  async getUserCardsByCategory(_id: number, category: string) {
+    const user = await this.userRepository.findOneBy({ _id })
+    const userCards = await this.userCardRepository.find({ where: { user }, relations: ['card'] });
+    const userCardsFiltered = userCards.filter(card => card.card.category === category)
+    return userCardsFiltered
+  }
+
   async assignCardToUser(cardId: number, userId: number) {
     console.log('userId: ', userId)
     const user = await this.userRepository.findOne({ where: { _id: userId } });
