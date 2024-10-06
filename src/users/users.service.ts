@@ -52,6 +52,10 @@ export class UsersService {
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
 
+          if (!userRefExist.referralUsers) {
+            userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
+          }
+          
           userNew.referralUser = userRefExist
           userRefExist.referralUsers.push(userNew)
           userRefExist.coins += 1000
