@@ -105,16 +105,21 @@ export class UserCardsService {
 
     console.log('USERCARD3', user)
 
-    await this.userRepository.save(user);
 
     console.log('USERCARD4', user)
 
     userCard.level += 1;
+
+    user.salary -= userCard.salary
     userCard.salary = userCard.level * userCard.salary
+    user.salary += userCard.salary
+
     userCard.upgradeCost = upgradeCost;
+
 
     console.log('USERCARD5', userCard)
 
+    await this.userRepository.save(user);
     await this.userCardRepository.save(userCard);
     return user
   }
