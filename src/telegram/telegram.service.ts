@@ -14,7 +14,7 @@ export class TelegramService {
     // @InjectRepository(User)
     // private readonly userService: Repository<User>
   ) {
-    this.bot = new TelegramBot('7595953512:AAHAnLFuZrzcaVH2tNDfxomqwWUbBV1E0KQ', { polling: true });
+    this.bot = new TelegramBot('7513402778:AAF_BPgTuuWeo25gJ8xDiwrVKElkune5l0I', { polling: true });
 
     // Ожидание команды /start
     this.bot.onText(/\/start/, async (msg) => {
