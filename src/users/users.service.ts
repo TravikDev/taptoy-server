@@ -193,7 +193,7 @@ export class UsersService {
 
     console.log('userRecalculate: ', user)
 
-    const userCards = await this.userCardsRepository.findBy({ user })
+    const userCards = await this.userCardsRepository.findBy({ user: { _id } })
 
     console.log('userRecalculate: ', userCards)
 
