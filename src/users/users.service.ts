@@ -47,18 +47,22 @@ export class UsersService {
 
       if (idTelegramRef && idTelegramRef !== "") {
 
-        const userRefExist = await this.userRepository.findOneBy({ idTelegram: idTelegramRef })
+        const userRefExist = await this.userRepository.findOne({ where: { idTelegram: idTelegramRef }, relations: ['referralUsers'] })
 
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
 
-          if (!userRefExist.referralUsers) {
-            userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
-          }
-          
-          userNew.referralUser = userRefExist
+          // if (!userRefExist.referralUsers) {
+          //   userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
+          // }
+
+          console.log('userRefExist')
           userRefExist.referralUsers.push(userNew)
+          console.log('userRefExist PUSH')
+          userNew.referralUser = userRefExist
+          console.log('userRefExist SETUP')
           userRefExist.coins += 1000
+          console.log('userRefExist +1000')
           await this.userRepository.save(userRefExist);
 
           console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram}) with Ref idTelegram: ${userRefExist.idTelegram}`)
