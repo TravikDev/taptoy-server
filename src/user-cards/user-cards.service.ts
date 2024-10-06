@@ -91,18 +91,28 @@ export class UserCardsService {
       throw new NotFoundException('UserCard or User not found');
     }
 
+
     const upgradeCost = this.getUpgradeCost(userCard.level);
+
+    console.log('USERCARD2', upgradeCost)
 
     if (user.coins < upgradeCost) {
       throw new BadRequestException('Insufficient coins to upgrade the card');
     }
 
     user.coins -= upgradeCost;
+
+    console.log('USERCARD3', user)
+
     await this.userRepository.save(user);
+
+    console.log('USERCARD4', user)
 
     userCard.level += 1;
     userCard.salary = userCard.level * userCard.salary
     userCard.upgradeCost = upgradeCost;
+
+    console.log('USERCARD5', userCard)
 
     return await this.userCardRepository.save(userCard);
   }
