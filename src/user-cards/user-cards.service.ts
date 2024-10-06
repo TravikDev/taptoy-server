@@ -34,7 +34,8 @@ export class UserCardsService {
 
     console.log('userCards: ', userCards)
 
-    const userCardsFiltered = userCards.filter(card => card.card.category === category)
+    const userCardsUpdated = userCards.map((card, idx) => ({ ...card, salary: userCards[idx].salary, level: userCards[idx].level, upgradeCost: userCards[idx].upgradeCost }))
+    const userCardsFiltered = userCardsUpdated.filter(card => card.card.category === category)
 
     console.log('userCards filtered: ', userCardsFiltered)
 
