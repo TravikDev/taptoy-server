@@ -57,11 +57,11 @@ class User {
     // @ManyToOne(() => User, user => user.referralUsers)
     // referralUser: User
 
-    @ManyToOne(() => User, user => user.referralUsers, { nullable: true })
-    referralUser: User; // Ссылка на реферера
+    // @ManyToOne(() => User, user => user.referralUsers, { nullable: true })
+    // referralUser: User; // Ссылка на реферера
     
-    @OneToMany(() => User, user => user.referralUser)
-    referralUsers: User[]; // Массив рефералов
+    // @OneToMany(() => User, user => user.referralUser)
+    // referralUsers: User[]; // Массив рефералов
 
     @Column({ type: 'jsonb', nullable: true })  // Тип поля json, допускается null
     referralUsersJSON: any;  // Вы можете указать `any` для хранения любых данных

@@ -14,7 +14,7 @@ export class TelegramService {
     // @InjectRepository(User)
     // private readonly userService: Repository<User>
   ) {
-    this.bot = new TelegramBot('7419941967:AAGWQH1vtImV_1Sl1ritgGVXX0cbUwjUxVI', { polling: true });
+    this.bot = new TelegramBot('7595953512:AAHAnLFuZrzcaVH2tNDfxomqwWUbBV1E0KQ', { polling: true });
 
     // Ожидание команды /start
     this.bot.onText(/\/start/, async (msg) => {
@@ -79,7 +79,7 @@ export class TelegramService {
 
     console.log('ID!: ', chatId)
 
-    const webAppUrl = `https://paradoxlive.pro?userId=${chatId}`; // URL вашего Web App
+    const webAppUrl = `https://paradoxlive.pro`; // URL вашего Web App
 
     const options = {
       reply_markup: {
@@ -91,9 +91,9 @@ export class TelegramService {
             },
           ],
         ],
-        keyboard: [
-          [{ text: 'Меня пригласили' }], // Two buttons side by side
-        ],
+        // keyboard: [
+        //   [{ text: 'Меня пригласили' }], // Two buttons side by side
+        // ],
         resize_keyboard: true, // Automatically resize the keyboard
         one_time_keyboard: true, // Keyboard disappears after one use
       },

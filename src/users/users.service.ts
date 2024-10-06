@@ -36,9 +36,9 @@ export class UsersService {
 
     console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
 
-    
+
     const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
-    
+
     console.log('userExist', userExist)
 
     const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
@@ -58,10 +58,6 @@ export class UsersService {
 
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
-
-          if (!userRefExist.referralUsers) {
-            userRefExist.referralUsersJSON = []; // Инициализируем как пустой массив, если он undefined
-          }
 
           console.log('userRefExist', userRefExist, userNew)
           userRefExist.referralUsersJSON.push(userNew.idTelegram)
