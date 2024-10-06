@@ -29,8 +29,8 @@ export class UserCardsService {
 
     console.log('by category', category, _id)
 
-    const user = await this.userRepository.findOneBy({ _id })
-    const userCards = await this.userCardRepository.find({ where: { user }, relations: ['card'] });
+    // const user = await this.userRepository.findOneBy({ _id })
+    const userCards = await this.userCardRepository.find({ where: { user: { _id } }, relations: ['card'] });
 
     console.log('userCards: ', userCards)
 
