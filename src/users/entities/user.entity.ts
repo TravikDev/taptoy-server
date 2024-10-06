@@ -54,10 +54,10 @@ class User {
     socketId: string
 
 
-    @OneToMany(() => User, user => user.referralUsers)
+    @ManyToOne(() => User, user => user.referralUsers)
     referralUser: User
 
-    @ManyToOne(() => User, user => user.referralUser, { cascade: true })
+    @OneToMany(() => User, user => user.referralUser, { cascade: true })
     referralUsers: User[] = []
 
     // @Column({ type: 'jsonb', nullable: true, default: null })
