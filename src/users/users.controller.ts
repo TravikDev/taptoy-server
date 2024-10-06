@@ -8,16 +8,16 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post('update/:idRefTelegram?')
-  create(@Param('idRefTelegram') idTelegram: string, @Param('idRefTelegram') idRefTelegram: string) {
+  create(@Body() createUserDto: CreateUserDto, @Param('idRefTelegram') idRefTelegram: string,) {
 
-    console.log('BODY + PARAM: ', idTelegram, idRefTelegram)
+    console.log('BODY + PARAM: ', createUserDto, idRefTelegram)
 
     if (idRefTelegram) {
       console.log('with ref')
-      return this.usersService.createOrUpdate(idTelegram, idRefTelegram);
+      return this.usersService.createOrUpdate(createUserDto, idRefTelegram);
     }
     console.log('no ref')
-    return this.usersService.createOrUpdate(idTelegram);
+    return this.usersService.createOrUpdate(createUserDto);
 
   }
 

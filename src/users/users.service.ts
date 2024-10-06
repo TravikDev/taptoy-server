@@ -29,15 +29,15 @@ export class UsersService {
     private userCardsRepository: Repository<UserCard>
   ) { }
 
-  async createOrUpdate(idTelegram: string, idTelegramRef = ""): Promise<User> {
+  async createOrUpdate(createUserDto: CreateUserDto, idTelegramRef = ""): Promise<User> {
 
     const dateRegistartion = new Date().valueOf().toString()
     const dateOnline = dateRegistartion
 
-    console.log('USER: ', idTelegram)
+    console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
 
-    const userExist = await this.userRepository.findOneBy({ idTelegram })
-    const userNew = this.userRepository.create({ idTelegram, dateRegistartion, dateOnline });
+    const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
+    const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
 
     // ------------------------- IF USER DOESN'T EXIST
 
