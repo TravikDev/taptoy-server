@@ -59,7 +59,7 @@ export class UsersService {
           console.log('userRefExist', userRefExist, userNew)
           userRefExist.referralUsers.push(userNew)
           console.log('userRefExist PUSH')
-          userNew.referralUser = userRefExist
+          // userNew.referralUser = userRefExist
           console.log('userRefExist SETUP')
           userRefExist.coins += 1000
           console.log('userRefExist +1000')

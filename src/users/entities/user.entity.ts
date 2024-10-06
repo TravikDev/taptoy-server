@@ -54,10 +54,10 @@ class User {
     socketId: string
 
 
-    @ManyToOne(() => User, user => user.referralUsers)
-    referralUser: User
+    // @ManyToOne(() => User, user => user.referralUsers)
+    // referralUser: User
 
-    @OneToMany(() => User, user => user.referralUser)
+    @OneToMany(() => User, user => user.idTelegram)
     referralUsers: User[]
 
     // @Column({ type: 'jsonb', nullable: true, default: null })
