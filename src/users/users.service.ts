@@ -57,7 +57,7 @@ export class UsersService {
           }
 
           console.log('userRefExist', userRefExist, userNew)
-          userRefExist.referralUsers.push(userNew)
+          userRefExist.referralUsers = [...userRefExist.referralUsers, userNew]
           console.log('userRefExist PUSH')
           userNew.referralUser = userRefExist
           console.log('userRefExist SETUP')
