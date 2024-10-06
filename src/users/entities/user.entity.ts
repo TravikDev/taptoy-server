@@ -15,7 +15,7 @@ class User {
 
     // Basic
 
-    @Column({ nullable: false, default: 0 })
+    @Column({ nullable: false, default: '0' })
     idTelegram: string
 
     @Column({ default: 'Guest' })

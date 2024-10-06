@@ -2,20 +2,19 @@ import { IsEmail, IsNotEmpty, isNumber, IsNumber, IsOptional, IsString } from "c
 
 export class CreateUserDto {
 
-    @IsNumber()
-    @IsNotEmpty()
+    @IsString()
     idTelegram: string
 
     @IsString()
     username: string
 
-    @IsOptional()
-    @IsString()
-    avatar?: string
+    // @IsOptional()
+    // @IsString()
+    // avatar?: string
 
-    @IsOptional()
-    @IsString()
-    idRefTelegram?: string;
+    // @IsOptional()
+    // @IsString()
+    // idRefTelegram?: string;
     // @IsNumber()
     // level: number
 
