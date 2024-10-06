@@ -36,8 +36,14 @@ export class UsersService {
 
     console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
 
+    
     const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
+    
+    console.log('userExist', userExist)
+
     const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
+
+    console.log('userNew', userNew)
 
     // ------------------------- IF USER DOESN'T EXIST
 
@@ -47,7 +53,8 @@ export class UsersService {
 
       if (idTelegramRef && idTelegramRef !== "") {
 
-        const userRefExist = await this.userRepository.findOne({ where: { idTelegram: idTelegramRef }, relations: ['referralUsers'] })
+        const userRefExist = await this.userRepository.findOne({ where: { idTelegram: idTelegramRef } })
+        console.log('userRefExist', userRefExist)
 
         // -------------------- IF REF IS GOOD
         if (userRefExist) {
@@ -57,7 +64,7 @@ export class UsersService {
           }
 
           console.log('userRefExist', userRefExist, userNew)
-          userRefExist.referralUsers.push(userNew)
+          userRefExist.referralUsers.push(userNew.idTelegram)
           console.log('userRefExist PUSH')
           // userNew.referralUser = userRefExist
           console.log('userRefExist SETUP')

@@ -57,8 +57,8 @@ class User {
     // @ManyToOne(() => User, user => user.referralUsers)
     // referralUser: User
 
-    @OneToMany(() => User, user => user.idTelegram)
-    referralUsers: User[]
+    @Column({ type: 'array' })
+    referralUsers: string[]
 
     // @Column({ type: 'jsonb', nullable: true, default: null })
     // refUsers: IRefUser[]
