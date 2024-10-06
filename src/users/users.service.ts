@@ -187,15 +187,22 @@ export class UsersService {
   // }
 
   async recalculateSalary(_id: number) {
-    const userNew = await this.userRepository.findOneBy({ _id })
-    const userCards = await this.userCardsRepository.findBy({ user: userNew })
 
-    console.log(userCards)
+    console.log('userRecalculate id: ', _id)
+    const user = await this.userRepository.findOneBy({ _id })
+
+    console.log('userRecalculate: ', user)
+
+    const userCards = await this.userCardsRepository.findBy({ user })
+
+    console.log('userRecalculate: ', userCards)
+
+    // console.log(userCards)
 
     const salary = userCards.reduce((acc, item) => { console.log(item); return acc + item.salary }, 0)
 
     console.log('userCurrentSalary!: ', salary)
-    return await this.userRepository.save({ ...userNew, salary })
+    return await this.userRepository.save({ ...user, salary })
   }
 
   async findAll() {
