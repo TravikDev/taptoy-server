@@ -49,7 +49,9 @@ export class UserCardsService {
 
     console.log('CARD: ', card)
 
-    const cardExist = await this.userCardRepository.findOneBy({ user, card })
+    const cardExist = await this.userCardRepository.findOneBy({ user: { _id: userId }, card: { _id: cardId } })
+
+    console.log('CardExist: ', cardExist)
 
     if (cardExist) {
       throw new BadRequestException('Exist')
