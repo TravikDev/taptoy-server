@@ -29,7 +29,7 @@ export class UsersService {
     private userCardsRepository: Repository<UserCard>
   ) { }
 
-  async createOrUpdate(createUserDto: CreateUserDto, idTelegramRef = ""): Promise<User> {
+  async createOrUpdate(createUserDto: CreateUserDto, idTelegramRef = ""): Promise<User | { user: User, salary: number }> {
 
     const dateRegistartion = new Date().valueOf().toString()
     const dateOnline = dateRegistartion
@@ -69,13 +69,17 @@ export class UsersService {
           await this.userRepository.save(userRefExist);
 
           console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram}) with Ref idTelegram: ${userRefExist.idTelegram}`)
-          return await this.userRepository.save(userNew);
+
+          const user = await this.userRepository.save(userNew);
+
+          return { user, salary: 0 }
 
           // -------------------- IF REF IS BAD
         } else {
 
           console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram})`)
-          return await this.userRepository.save(userNew);
+          const user = await this.userRepository.save(userNew);
+          return { user, salary: 0 }
         }
 
         // -------------------- NO REF
@@ -83,7 +87,8 @@ export class UsersService {
 
         // const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
         console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram})`)
-        return await this.userRepository.save(userNew);
+        const user = await this.userRepository.save(userNew);
+        return { user, salary: 0 }
 
       }
 
@@ -95,7 +100,7 @@ export class UsersService {
   }
 
 
-  async updateOnline(_id: number): Promise<User> {
+  async updateOnline(_id: number): Promise<{ user: User, salary: number }> {
 
     // Update Online
 
@@ -108,14 +113,18 @@ export class UsersService {
     console.log('DIFF - 1 HOUR: ', diffHour)
 
     const salary = +(diffHour * userNew.salary).toFixed(0)
+    if (salary < 1) {
+      return
+    }
     userNew.coins += salary
     console.log('SALARY - 1 HOUR: ', salary)
 
     // console.log('SALARY: ', salary)
 
     // frontSide!
-    return await this.userRepository.save({ ...userNew, dateOnline });
-
+    //return 
+    const currentUser = await this.userRepository.save({ ...userNew, dateOnline });
+    return { user: currentUser, salary }
   }
 
   // async createRef(idTelegram: string, refId: string): Promise<User> {
