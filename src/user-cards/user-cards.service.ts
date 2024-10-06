@@ -79,7 +79,7 @@ export class UserCardsService {
 
   async upgradeUserCard(userId: number, userCardId: number): Promise<UserCard> {
 
-    console.log('USERID', userId)
+    console.log('USERID', userId, userCardId)
 
     const user = await this.userRepository.findOne({ where: { _id: userId } });
     const userCard = await this.userCardRepository.findOne({ where: { _id: userCardId, user } });
