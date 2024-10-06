@@ -5,7 +5,7 @@ import { UpdateCardDto } from './dto/update-card.dto';
 
 @Controller('cards')
 export class CardsController {
-  constructor(private readonly cardsService: CardsService) {}
+  constructor(private readonly cardsService: CardsService) { }
 
   @Post()
   create(@Body() createCardDto: CreateCardDto) {
@@ -15,6 +15,11 @@ export class CardsController {
   @Get()
   findAll() {
     return this.cardsService.findAll();
+  }
+
+  @Get('category/:category')
+  findAllByCategory(@Param('category') category: string) {
+    return this.cardsService.findAllByCategory(category);
   }
 
   @Get(':id')

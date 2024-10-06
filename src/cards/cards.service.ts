@@ -39,6 +39,10 @@ export class CardsService {
     return await this.cardRepository.find();
   }
 
+  async findAllByCategory(category: string) {
+    return await this.cardRepository.findBy({ category });
+  }
+
   async findOne(_id: number) {
     return await this.cardRepository.findOneBy({ _id });
   }
