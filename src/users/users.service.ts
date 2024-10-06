@@ -56,7 +56,7 @@ export class UsersService {
           //   userRefExist.referralUsers = []; // Инициализируем как пустой массив, если он undefined
           // }
 
-          console.log('userRefExist')
+          console.log('userRefExist', userRefExist, userNew)
           userRefExist.referralUsers.push(userNew)
           console.log('userRefExist PUSH')
           userNew.referralUser = userRefExist
