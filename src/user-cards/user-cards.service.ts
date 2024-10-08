@@ -89,7 +89,7 @@ export class UserCardsService {
     console.log('USERID', userId, userCardId)
 
     const user = await this.userRepository.findOne({ where: { _id: userId }, relations: ['userCards'] });
-    const card = await this.cardRepository.findOneBy({ _id: userCardId })
+    const card = await this.cardRepository.findOne({ where: { _id: userCardId }, relations: ['cards'] })
     const userCard = await this.userCardRepository.findOne({ where: { user: { _id: user._id }, card: { _id: card._id } } });
 
     console.log('USER', user)
@@ -109,7 +109,7 @@ export class UserCardsService {
       throw new BadRequestException('Insufficient coins to upgrade the card');
     }
 
-    
+
 
     user.coins -= upgradeCost;
 
