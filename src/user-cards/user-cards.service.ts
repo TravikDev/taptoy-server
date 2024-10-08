@@ -89,8 +89,8 @@ export class UserCardsService {
     console.log('USERID', userId, userCardId)
 
     const user = await this.userRepository.findOne({ where: { _id: userId }, relations: ['userCards'] });
-    const card = await this.cardRepository.findOne({ where: { _id: userCardId }, relations: ['cards'] })
-    const userCard = await this.userCardRepository.findOne({ where: { user: { _id: user._id }, card: { _id: card._id } } });
+    const card = await this.cardRepository.findOne({ where: { _id: userCardId } })
+    const userCard = await this.userCardRepository.findOne({ where: { user: { _id: user._id }, card: { _id: card._id } }, relations: ['card'] });
 
     console.log('USER', user)
     console.log('USERCARD', userCard)
