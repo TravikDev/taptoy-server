@@ -4,13 +4,16 @@ import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Card } from './entities/card.entity';
 import { Repository } from 'typeorm';
+import { UserCardsService } from 'src/user-cards/user-cards.service';
 
 @Injectable()
 export class CardsService {
 
   constructor(
     @InjectRepository(Card)
-    private readonly cardRepository: Repository<Card>
+    private readonly cardRepository: Repository<Card>,
+
+    private readonly userCardService: UserCardsService
   ) { }
 
   async create(createCardDto: CreateCardDto): Promise<Card> {
@@ -43,6 +46,15 @@ export class CardsService {
     return await this.cardRepository.findBy({ category });
   }
 
+
+  async findAllByCategoryAndId(category: string, id: number) {
+
+    const userCards = await this.userCardService.getUserCardsByCategory(id, category)
+
+    const allCards = await this.cardRepository.findBy({ category });
+
+    return allCards.filter(card => (userCards.findIndex(userCard => userCard.card === card) + 1))
+  }
   // async findOne(_id: number) {
   //   return await this.cardRepository.findOneBy({ _id });
   // }

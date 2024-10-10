@@ -23,6 +23,14 @@ export class CardsController {
     return this.cardsService.findAllByCategory(category);
   }
 
+
+  @Get('category/:category/:id')
+  findAllByCategoryAndId(@Param('category') category: string, @Param('id') id: number) {
+    console.log('category cards: ', category)
+    return this.cardsService.findAllByCategoryAndId(category, id);
+  }
+
+
   // @Get(':id')
   // findOne(@Param('id') id: string) {
   //   return this.cardsService.findOne(+id);
