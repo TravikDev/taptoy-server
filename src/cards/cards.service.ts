@@ -53,7 +53,7 @@ export class CardsService {
 
     const allCards = await this.cardRepository.findBy({ category });
 
-    return allCards.filter(card => Boolean(userCards.findIndex(userCard => userCard.card === card) + 1))
+    return allCards.filter(card => Boolean(userCards.findIndex(userCard => userCard.card._id === card._id) + 1))
   }
   // async findOne(_id: number) {
   //   return await this.cardRepository.findOneBy({ _id });
