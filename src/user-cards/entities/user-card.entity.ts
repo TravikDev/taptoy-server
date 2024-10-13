@@ -16,9 +16,9 @@ export class UserCard {
   @Column({ default: 1 })
   level: number;
 
-  @Column({ type: 'int', default: 1 })
+  @Column({ type: 'int', default: 5 })
   salary: number;
 
-  @Column({ type: 'int', default: 1 })
+  @Column({ type: 'int', default: 0 })
   upgradeCost: number;
 }
