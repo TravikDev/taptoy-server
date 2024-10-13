@@ -100,32 +100,24 @@ export class UserCardsService {
     }
 
 
-    const upgradeCost = this.getUpgradeCost(userCard.card.price, userCard.level);
-    // const upgradeCost = userCard.card.price
+    // const upgradeCost = this.getUpgradeCost(userCard.card.price, userCard.level);
+    const upgradeCost = userCard.card.upgradeCost
 
-    console.log('USERCARD2', upgradeCost)
-
-    if (user.coins < upgradeCost) {
+    if (user.coins < userCard.card.upgradeCost) {
       throw new BadRequestException('Insufficient coins to upgrade the card');
     }
 
-
-
-    user.coins -= upgradeCost;
-
-    console.log('USERCARD3', user)
-
-
-    console.log('USERCARD4', user)
-
-    userCard.level += 1;
-
+    user.coins -= userCard.card.upgradeCost;
     user.salary -= userCard.salary
-    userCard.salary = userCard.level * userCard.salary
+
+    
+    userCard.level += 1;
+    userCard.salary *= 2
+    userCard.upgradeCost *= 2
+
     user.salary += userCard.salary
 
     userCard.upgradeCost = upgradeCost;
-
 
     console.log('USERCARD5', userCard)
 
@@ -135,8 +127,8 @@ export class UserCardsService {
   }
 
 
-  private getUpgradeCost(price, level: number): number {
-    return price * Math.pow(2, level);
-  }
+  // private getUpgradeCost(price, level: number): number {
+  //   return price * Math.pow(2, level);
+  // }
 
 }
