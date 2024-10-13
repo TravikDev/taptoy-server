@@ -64,7 +64,7 @@ export class UsersService {
           }
 
           console.log('userRefExist', userRefExist, userNew)
-          userRefExist.referralUsersJSON.push(userNew.idTelegram)
+          userRefExist.referralUsersJSON.push({ idTelegram: userNew.idTelegram, username: userNew.username })
           console.log('userRefExist PUSH')
           // userNew.referralUser = userRefExist
           console.log('userRefExist SETUP')
