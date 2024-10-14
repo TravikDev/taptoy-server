@@ -10,6 +10,9 @@ export class Card {
     @Column({ default: 'Title' })
     title: string
 
+    @Column({ default: 'Short Description' })
+    descriptionShort: string
+
     @Column({ default: 'Description' })
     description: string
 
@@ -28,9 +31,11 @@ export class Card {
     @Column({ default: 'http://google.com/' })
     urlPicture: string
 
+    @Column({ default: 'http://google.com/' })
+    urlUser: string
+
     @Column({ default: 1 })
     price: number
-
 
     @Column({ default: '1' })
     dateCreation: string
