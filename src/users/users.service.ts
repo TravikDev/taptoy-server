@@ -32,29 +32,22 @@ export class UsersService {
   async createOrUpdate(createUserDto: CreateUserDto, idTelegramRef = ""): Promise<User | { user: User, salary: number }> {
 
     const dateRegistartion = new Date().valueOf().toString()
+    const dateOnline = dateRegistartion
 
     console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
 
 
     const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
 
-    let dateOnline
-
-    if (!userExist) {
-      dateOnline = dateRegistartion
-    } else {
-      dateOnline = userExist.dateOnline
-    }
-
     console.log('userExist', userExist)
-
-    const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
-
-    console.log('userNew', userNew)
 
     // ------------------------- IF USER DOESN'T EXIST
 
     if (!userExist) {
+
+      const userNew = this.userRepository.create({ ...createUserDto, dateRegistartion, dateOnline });
+
+      console.log('userNew', userNew)
 
       // ---------------------- REF SIDE
 
@@ -105,7 +98,7 @@ export class UsersService {
       }
 
     } else {
-      console.log(`Update User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram})`)
+      console.log(`Update User (id: ${userExist._id}; idTelegram: ${userExist.idTelegram})`)
       return await this.updateOnline(userExist._id)
     }
 
@@ -117,16 +110,10 @@ export class UsersService {
     // Update Online
 
     const dateOnline = new Date().valueOf().toString()
-    console.log('dateOnline: ', dateOnline)
 
     const userNew = await this.userRepository.findOneBy({ _id })
-    console.log('userNew: ', userNew)
-
 
     const diff = +dateOnline - +userNew.dateOnline
-    console.log('diff: ', diff)
-    
-    
     const diffHour = (diff / 1000 / 60 / 60) <= 3 ? (diff / 1000 / 60 / 60) : 3
     console.log('DIFF - 1 HOUR: ', diffHour)
 
