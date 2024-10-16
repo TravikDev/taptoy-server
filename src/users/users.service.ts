@@ -32,12 +32,19 @@ export class UsersService {
   async createOrUpdate(createUserDto: CreateUserDto, idTelegramRef = ""): Promise<User | { user: User, salary: number }> {
 
     const dateRegistartion = new Date().valueOf().toString()
-    const dateOnline = dateRegistartion
 
     console.log('USER: ', createUserDto.username, createUserDto.idTelegram)
 
 
     const userExist = await this.userRepository.findOneBy({ idTelegram: createUserDto.idTelegram })
+
+    let dateOnline
+
+    if (!userExist) {
+      dateOnline = dateRegistartion
+    } else {
+      dateOnline = userExist.dateOnline
+    }
 
     console.log('userExist', userExist)
 
@@ -63,7 +70,7 @@ export class UsersService {
             userRefExist.referralUsersJSON = []
           }
 
-          
+
           console.log('userRefExist', userRefExist, userNew)
           userRefExist.referralUsersJSON.push({ idTelegram: userNew.idTelegram, username: userNew.username })
           console.log('userRefExist PUSH')
