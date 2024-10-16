@@ -10,7 +10,7 @@ export class Card {
     @Column({ default: 'Title' })
     title: string
 
-    @Column({ default: 'Short Description' })
+    @Column({ default: null, nullable: true })
     descriptionShort: string
 
     @Column({ default: 'Description' })

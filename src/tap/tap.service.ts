@@ -27,6 +27,7 @@ export class TapService {
   async clickTap(idTelegram: string, socketId: string) {
     console.log(idTelegram)
     const user = await this.userRepository.findOneBy({ idTelegram, socketId })
+    if (!user) { return }
     console.log(user.coins)
     const coins = user.coins + 1
     if (user.energy <= 0) {
