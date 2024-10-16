@@ -114,7 +114,7 @@ export class UsersService {
     const userNew = await this.userRepository.findOneBy({ _id })
 
     const diff = +dateOnline - +userNew.dateOnline
-    const diffHour = (diff / 1000 / 60 / 60) <= 3 ? (diff / 1000 / 60 / 60) : 3
+    const diffHour = +(diff / 1000 / 60 / 60) <= 3 ? +(diff / 1000 / 60 / 60) : 3
     console.log('DIFF - 1 HOUR: ', diffHour)
 
     const salary = +((diffHour * userNew.salary).toFixed(0))
