@@ -117,10 +117,16 @@ export class UsersService {
     // Update Online
 
     const dateOnline = new Date().valueOf().toString()
+    console.log('dateOnline: ', dateOnline)
 
     const userNew = await this.userRepository.findOneBy({ _id })
+    console.log('userNew: ', userNew)
+
 
     const diff = +dateOnline - +userNew.dateOnline
+    console.log('diff: ', diff)
+    
+    
     const diffHour = (diff / 1000 / 60 / 60) <= 3 ? (diff / 1000 / 60 / 60) : 3
     console.log('DIFF - 1 HOUR: ', diffHour)
 
