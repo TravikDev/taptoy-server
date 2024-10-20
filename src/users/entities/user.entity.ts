@@ -1,8 +1,45 @@
 
+import { title } from 'process';
 import { Card } from 'src/cards/entities/card.entity';
 import { Team } from 'src/teams/entities/team.entity';
 import { UserCard } from 'src/user-cards/entities/user-card.entity';
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+
+const questsDailyList = [
+    {
+        id: 1,
+        isCompleted: false,
+        isDaily: false,
+        fullCounter: 9,
+        currentCounter: 0,
+        startDate: null,
+        currentDate: null,
+        title: 'День',
+        salary: 1000,
+        url: 'https://google.com',
+        urlPicture: 'https://google.com',
+    },
+]
+
+const questsList = [
+    {
+        id: 1,
+        isCompleted: false,
+        salary: 2500,
+        title: 'Подписаться на наc в Telegram',
+        url: 'https://google.com',
+        urlPicture: 'https://google.com',
+    },
+    {
+        id: 2,
+        isCompleted: false,
+        salary: 5000,
+        title: 'Подписаться на наш канал',
+        url: 'https://google.com',
+        urlPicture: 'https://google.com',
+    },
+]
 
 
 export type IRefUser = { userId: number }
@@ -59,12 +96,18 @@ class User {
 
     // @ManyToOne(() => User, user => user.referralUsers, { nullable: true })
     // referralUser: User; // Ссылка на реферера
-    
+
     // @OneToMany(() => User, user => user.referralUser)
     // referralUsers: User[]; // Массив рефералов
 
     @Column({ type: 'jsonb', nullable: true, default: [] })  // Тип поля json, допускается null
     referralUsersJSON: any;  // Вы можете указать `any` для хранения любых данных
+
+    @Column({ type: 'jsonb', nullable: true, default: questsList })  // Тип поля json, допускается null
+    questsUsersJSON: any;  // Вы можете указать `any` для хранения любых данных
+
+    @Column({ type: 'jsonb', nullable: true, default: questsDailyList })  // Тип поля json, допускается null
+    questsDailyUsersJSON: any;  // Вы можете указать `any` для хранения любых данных
 
     // @Column({ type: 'jsonb', nullable: true, default: null })
     // refUsers: IRefUser[]

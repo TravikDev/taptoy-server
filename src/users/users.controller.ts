@@ -22,7 +22,7 @@ export class UsersController {
 
   }
 
-  
+
 
   @Post('tap/:id')
   tap(@Param('id') id: number) {
@@ -61,6 +61,10 @@ export class UsersController {
   }
 
 
+  @Post('quest/:id/:idQuest')
+  onClickQuest(@Param('id') id: string, @Param('idQuest') idQuest: number) {
+    return this.usersService.onClickQuest(id, idQuest);
+  }
 
   // @Delete(':id')
   // remove(@Param('id') id: string) {

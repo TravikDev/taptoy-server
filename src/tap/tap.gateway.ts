@@ -49,13 +49,14 @@ export class TapGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     @ConnectedSocket() client: Socket
   ) {
     if (!client || !client.id) {
-      // console.error('Button press failed: undefined client');
+      // console.log('Button press failed: undefined client: ', client);
       return;
     }
 
-    console.log(data);
+    // console.log('DATA: ', data);
+    // console.log('CLIENT: ', client);
     const result = await this.tapService.clickTap(data.id, client.id);
-    console.log('RESP: ', result)
+    // console.log('RESP: ', result)
 
     // this.pressCounts[client.id] = (this.pressCounts[client.id] || 0) + 1;
     // console.log(`Button pressed by ${client.id}. Total presses: ${this.pressCounts[client.id]}`);

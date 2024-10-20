@@ -75,6 +75,7 @@ export class UsersService {
 
           console.log(`New User (id: ${userNew._id}; idTelegram: ${userNew.idTelegram}) with Ref idTelegram: ${userRefExist.idTelegram}`)
 
+          userNew.coins = 1000
           const user = await this.userRepository.save(userNew);
 
           return { user, salary: 0 }
@@ -280,6 +281,16 @@ export class UsersService {
   }
 
 
+  async onClickQuest(idTelegram: string, idQuest: number) {
+    console.log('quest: ', idTelegram, idQuest)
+    const user = await this.userRepository.findOneBy({ idTelegram })
+    console.log('currentUser: ', user)
+    user.coins += user.questsUsersJSON.find((q: any) => +q.id === +idQuest).salary
+    user.questsUsersJSON = user.questsUsersJSON.map((q: any) => +q.id === +idQuest ? { ...q, isCompleted: true } : q)
 
+    console.log('newUser: ', user)
+
+    return this.userRepository.save(user)
+  }
 
 }

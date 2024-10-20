@@ -32,7 +32,13 @@ export class Card {
     urlPicture: string
 
     @Column({ default: 'http://google.com/' })
+    urlPictureSocial: string
+
+    @Column({ default: 'http://google.com/' })
     urlUser: string
+
+    @Column({ default: 'Title' })
+    urlUserTitle: string
 
     @Column({ default: 1 })
     price: number

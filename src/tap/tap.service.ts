@@ -25,8 +25,10 @@ export class TapService {
   }
 
   async clickTap(idTelegram: string, socketId: string) {
-    console.log(idTelegram)
-    const user = await this.userRepository.findOneBy({ idTelegram, socketId })
+
+    console.log('clickTap', idTelegram, socketId)
+
+    const user = await this.userRepository.findOne({ where: { idTelegram, socketId }, })
     if (!user) { return }
     console.log(user.coins)
     const coins = user.coins + 1

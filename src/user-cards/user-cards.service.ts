@@ -107,11 +107,18 @@ export class UserCardsService {
     //   userCard.upgradeCost = userCard.card.price * 2
     // }
 
-    if (user.coins < userCard.card.upgradeCost) {
+    if (user.coins < userCard.upgradeCost) {
       throw new BadRequestException('Insufficient coins to upgrade the card');
     }
 
-    user.coins -= userCard.card.upgradeCost;
+    console.log('UserCoinsBefore: ', user.coins)
+    console.log('UserCardUpgrade: ', userCard.upgradeCost)
+
+    user.coins -= userCard.upgradeCost;
+
+    console.log('UserCoinsAfter: ', user.coins)
+
+
     user.salary -= userCard.salary
 
     userCard.level += 1;
